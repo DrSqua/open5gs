@@ -685,34 +685,31 @@ bool udr_nudr_dr_handle_subscription_provisioned(
         }
 
         if (!returnProvisionedData) {
+            char *trace_ref = ogs_strdup("00101-abcdef");
+            char *ne_type_list = ogs_strdup("todo");
+            char *event_list = ogs_strdup("todo");
+            TraceData = OpenAPI_trace_data_create(trace_ref,
+                    OpenAPI_trace_depth_MAXIMUM,
+                    ne_type_list,
+                    event_list,
+                    NULL/*collection_entity_ipv4_addr*/,
+                    NULL/*collection_entity_ipv6_addr*/,
+                    NULL/*interface_list*/);
+            ogs_assert(TraceData);
+            AccessAndMobilitySubscriptionData.trace_data = TraceData;
+
             memset(&sendmsg, 0, sizeof(sendmsg));
-            sendmsg.AccessAndMobilitySubscriptionData =
-                &AccessAndMobilitySubscriptionData;
-        char *trace_ref = ogs_strdup("00101-abcdef");
-        char *ne_type_list = ogs_strdup("todo");
-        char *event_list = ogs_strdup("todo");
-        TraceData = OpenAPI_trace_data_create(trace_ref,
-                OpenAPI_trace_depth_MAXIMUM,
-                ne_type_list,
-                event_list,
-                NULL/*collection_entity_ipv4_addr*/,
-                NULL/*collection_entity_ipv6_addr*/,
-                NULL/*interface_list*/);
-        ogs_assert(TraceData);
-        AccessAndMobilitySubscriptionData.trace_data = TraceData;
+            sendmsg.AccessAndMobilitySubscriptionData = &AccessAndMobilitySubscriptionData;
+            response = ogs_sbi_build_response(&sendmsg, OGS_SBI_HTTP_STATUS_OK);
+            ogs_assert(response);
+            ogs_assert(true == ogs_sbi_server_send_response(stream, response));
 
-        memset(&sendmsg, 0, sizeof(sendmsg));
-        sendmsg.AccessAndMobilitySubscriptionData = &AccessAndMobilitySubscriptionData;
-        response = ogs_sbi_build_response(&sendmsg, OGS_SBI_HTTP_STATUS_OK);
-        ogs_assert(response);
-        ogs_assert(true == ogs_sbi_server_send_response(stream, response));
-
-        if (TraceData)
-            OpenAPI_trace_data_free(TraceData);
-        OpenAPI_list_for_each(GpsiList, node) {
-            if (node->data) ogs_free(node->data);
+            if (TraceData)
+                OpenAPI_trace_data_free(TraceData);
+            OpenAPI_list_for_each(GpsiList, node) {
+                if (node->data) ogs_free(node->data);
+            }
         }
-    }
     if (processSmfSel) {
         int i, j;
 
