@@ -442,12 +442,12 @@ bool udr_nudr_dr_handle_subscription_provisioned(
         *SessionManagementSubscriptionData = NULL;
     OpenAPI_smf_selection_subscription_data_t SmfSelectionSubscriptionData;
 
-    OpenAPI_list_t *GpsiList = NULL;
-    OpenAPI_ambr_rm_t SubscribedUeAmbr;
-    OpenAPI_list_t *DefaultSingleNssaiList = NULL;
-    OpenAPI_list_t *SingleNssaiList = NULL;
-    OpenAPI_nssai_t NSSAI;
-    OpenAPI_snssai_t *Snssai = NULL;
+    //    OpenAPI_list_t *GpsiList = NULL;
+    //    OpenAPI_ambr_rm_t SubscribedUeAmbr;
+    //    OpenAPI_list_t *DefaultSingleNssaiList = NULL;
+    //    OpenAPI_list_t *SingleNssaiList = NULL;
+    //    OpenAPI_nssai_t NSSAI;
+    //    OpenAPI_snssai_t *Snssai = NULL;
 
     OpenAPI_list_t *SubscribedSnssaiInfoList = NULL;
     OpenAPI_map_t *SubscribedSnssaiInfoMap = NULL;
